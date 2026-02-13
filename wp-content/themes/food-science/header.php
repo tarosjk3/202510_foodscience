@@ -1,28 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, user-scalable=no">
-
-  <?php
-    // CSS
-    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css');
-    wp_enqueue_style('google-web-font', 'https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
-    wp_enqueue_style('food-science-style', get_template_directory_uri() . '/assets/css/app.css');
-
-    // JS
-    wp_enqueue_script(
-        'food-science-main', 
-        get_template_directory_uri() . '/assets/js/main.js', 
-        ['jquery'],
-        filemtime(get_template_directory() . '/assets/js/main.js'),
-        [
-            'strategy' => 'defer',
-            // 'in_footer' => true //(もしwp_footerで出力する場合)
-        ]
-    );
-    wp_enqueue_script('jquery');
-?>
   <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
