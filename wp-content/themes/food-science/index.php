@@ -11,8 +11,9 @@
         <div class="archive_category">
           <h2 class="archive_title">カテゴリー</h2>
           <ul class="archive_list">
-            <li class="current-cat"><a href="#">お知らせ</a></li>
-            <li><a href="#">コラム</a></li>
+            <?php
+              wp_list_categories();
+            ?>
           </ul>
         </div>
 
