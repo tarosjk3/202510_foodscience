@@ -4,7 +4,7 @@
   <section class="section">
     <div class="section_inner">
       <div class="section_header">
-        <h1 class="heading heading-primary"><span>最新情報</span>NEWS - <?php wp_title(''); ?><?php if(is_year()): ?><?= get_query_var('year'); ?>年<?php endif; ?></h1>
+        <h1 class="heading heading-primary"><span>最新情報</span>NEWS - <?php wp_title(''); ?><?php if (is_year()): ?><?= get_query_var('year'); ?>年<?php endif; ?></h1>
       </div>
 
       <div class="archive">
@@ -24,10 +24,10 @@
           <h2 class="archive_title">年別</h2>
           <ul class="archive_list">
             <?php
-              $args = [
-                'type' => 'yearly',
-              ];
-              wp_get_archives($args);
+            $args = [
+              'type' => 'yearly',
+            ];
+            wp_get_archives($args);
             ?>
           </ul>
         </div>
@@ -46,6 +46,20 @@
           </div>
         <?php endif; ?>
 
+        <?php if (function_exists('wp_pagenavi')): ?>
+          <div class="pagination">
+            <?php wp_pagenavi(); ?>
+          </div>
+          <?php if (wp_is_mobile()): ?>
+            <?php the_posts_pagination([
+              'mid_size' => 2
+            ]); ?>
+          <?php else: ?>
+            <?php the_posts_pagination([
+              'mid_size' => 3
+            ]); ?>
+          <?php endif; ?>
+        <?php endif; ?>
       </div>
 
     </div>

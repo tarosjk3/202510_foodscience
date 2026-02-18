@@ -67,3 +67,60 @@ function my_wp_head()
     echo '<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no">';
 }
+
+
+/**
+ * Contact Form 7の時には整形機能をオフにする
+ */
+add_filter('wpcf7_autop_or_not', 'my_wpcf7_autop');
+function my_wpcf7_autop()
+{
+    return false;
+}
+
+/**
+ * ショートコードテスト
+ */
+// 1. ショートコード用の関数
+function shortcode_test($attr)
+{
+    // 引数のデフォルト値
+    $default = [
+        'color' => 'black',
+        'font-weight' => 'normal',
+    ];
+    $args = shortcode_atts($default, $attr);
+
+    var_dump($args);
+    if ($args['color'] === 'orange') {
+        $result = '<div style="color: orange">ショートコードによって出力した文章</div>';
+    } else {
+        $result = '<div>ショートコードによって出力した文章</div>';
+    }
+    return $result;
+}
+
+// 2. ショートコードの登録
+// add_shortcode('ショートコード名', 'ショートコードの関数名');
+add_shortcode('my_shortcode', 'shortcode_test');
+
+
+// 3. ショートコードの実行（テンプレートや投稿画面にて）
+// 使用例. [my_shortcode]
+
+/**
+ * メインクエリを変更する
+ */
+add_action('pre_get_posts', 'my_pre_get_posts');
+function my_pre_get_posts($query) {
+    // 管理ページ、メインクエリ以外では設定しない
+    if(is_admin() || !$query->is_main_query()) {
+        return;
+    }
+
+    // トップページの場合
+    if($query->is_home()) {
+        $query->set('posts_per_page', 3);
+        return;
+    }
+}

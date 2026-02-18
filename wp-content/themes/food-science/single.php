@@ -54,9 +54,9 @@
                 ?>
                   <div class="prevNext_item prevNext_item-next">
                     <a href="<?php the_permalink($next_post); ?>">
-                    <span><?= get_the_title($next_post); ?></span>
-                    <svg width=" 20" height="38" viewBox="0 0 20 38">
-                      <path d="M1832,1515l19,19L1832,1553" transform="translate(-1832 -1514)" fill="none" stroke="#224163" stroke-width="1" />
+                      <span><?= get_the_title($next_post); ?></span>
+                      <svg width=" 20" height="38" viewBox="0 0 20 38">
+                        <path d="M1832,1515l19,19L1832,1553" transform="translate(-1832 -1514)" fill="none" stroke="#224163" stroke-width="1" />
                       </svg>
                     </a>
                   </div>
@@ -66,6 +66,32 @@
             </footer>
           </article>
         <?php endwhile; ?>
+      <?php endif; ?>
+
+      <?php
+      $args = [
+        'post_type' => 'post', // post_type（投稿タイプ）
+        'posts_per_page' => 3, // １ページの表示件数
+        'post__not_in' => [get_the_ID()],
+      ];
+
+      $latest_query = new WP_Query($args);
+      ?>
+      <?php if ($latest_query->have_posts()): ?>
+        <section class="latest">
+          <header class="latest_header">
+            <h2 class="heading heading-secondary">新着情報</h2>
+          </header>
+          <div class="latest_body">
+            <div class="cardList">
+              <?php while ($latest_query->have_posts()): $latest_query->the_post(); ?>
+                <?php get_template_part('template-parts/loop-news'); ?>
+              <?php endwhile;
+              wp_reset_postdata();
+              ?>
+            </div>
+          </div>
+        </section>
       <?php endif; ?>
 
     </div>
