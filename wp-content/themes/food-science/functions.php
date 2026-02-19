@@ -112,6 +112,7 @@ add_shortcode('my_shortcode', 'shortcode_test');
  * メインクエリを変更する
  */
 add_action('pre_get_posts', 'my_pre_get_posts');
+// new WP_Query()
 function my_pre_get_posts($query) {
     // 管理ページ、メインクエリ以外では設定しない
     if(is_admin() || !$query->is_main_query()) {
@@ -123,4 +124,39 @@ function my_pre_get_posts($query) {
         $query->set('posts_per_page', 3);
         return;
     }
+}
+
+
+/**
+ * タイトルの「保護中」の文字を削除する
+ * __()関数では、sprintf関数が使用される
+ * $title = __( 'Protected: %s' );
+ */
+add_filter('protected_title_format', 'my_protected_title');
+function my_protected_title($title) {
+    // return '%s';
+    return __('%s');
+}
+
+/**
+ * パスワード保護フォームをカスタマイズする
+ */
+add_filter('the_password_form', 'my_password_form');
+function my_password_form() {
+    remove_filter('the_content', 'wpautop');
+
+    $wp_login_url = wp_login_url();
+
+    // $html = "aaa bbb {$変数名} aaa bbb ccc";
+    // Heredoc(ヒアドック) HTMLという文字はデリミタ（文字は任意）
+    $html = <<<HTML
+    <p>パスワードを入力してください。</p>
+    <form action="{$wp_login_url}?action=postpass" method="post" class="post-password-form">
+        <input type="password" name="post_password" required>
+        <input type="submit" name="Submit" value="送信">
+    </form>
+
+HTML;
+
+    return $html;
 }
