@@ -12,5 +12,13 @@
             <h4 class="foodCard_title"><?php the_title(); ?></h4>
             <p class="foodCard_price">¥650</p>
         </div>
+
+        <!-- テスト -->
+         <?php
+            $fields = get_post_meta(get_the_ID());
+        ?>
+        <pre>
+            <?php var_dump($fields); ?>
+        </pre>
     </a>
 </div>
