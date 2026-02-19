@@ -12,9 +12,13 @@
             </header>
             <div class="post_content">
               <time datetime="<?php the_time('Y-m-d'); ?>"><?php the_time('Y年m月d日'); ?></time>
+              
               <div class="content">
                 <?php the_content(); ?>
               </div>
+
+              <?php comments_template(); ?>
+
             </div>
             <footer class="post_footer">
               <?php
