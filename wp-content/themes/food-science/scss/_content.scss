@@ -1,0 +1,9 @@
+@mixin content-style() {
+    h2 {
+        font-weight: bold;
+        font-size: 1.8rem;
+    }
+    p {
+        margin-bottom: 1em;
+    }
+}

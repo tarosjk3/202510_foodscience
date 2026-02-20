@@ -17,6 +17,12 @@ function my_setup_theme()
      * ナビゲーションを追加する
      */
     add_theme_support('menus');
+
+    /**
+     * ブロックエディターにCSSを読み込む
+     */
+    add_theme_support('editor-styles');
+    add_editor_style('assets/css/editor-style.css');
 }
 
 
