@@ -7,11 +7,57 @@
       <p class="kv_subtitle">FROM JAPAN</p>
     </div>
 
-    <div class="kv_slider js-slider">
-      <div class="kv_sliderItem" style="background-image: url('<?= get_template_directory_uri(); ?>/assets/img/home/kv-01@2x.jpg');"></div>
-      <div class="kv_sliderItem" style="background-image: url('<?= get_template_directory_uri(); ?>/assets/img/home/kv-02@2x.jpg');"></div>
-      <div class="kv_sliderItem" style="background-image: url('<?= get_template_directory_uri(); ?>/assets/img/home/kv-03@2x.jpg');"></div>
-    </div>
+
+    <?php
+    $args = [
+      'post_type' => 'main-visual',
+      'posts_per_page' => -1,
+
+      // ページ属性の「順序」による並び替え（昇順）
+      'orderby' => 'menu_order',
+      'order' => 'ASC',
+
+      // 1. 公開終了日が過ぎていない投稿を取得
+      // もしくは
+      // 2. 公開終了日が設定されていない 
+      // もしくは
+      // 3. カスタムフィールド(end_date)が設定されていない
+      'meta_query' => [
+        // 1. 
+        [
+          'key' => 'end_date', //カスタムフィールド「公開終了日」のキー
+          'type' => 'DATETIME',
+          'value' => date('Y-m-d H:i:s'), // 現在の日時
+          'compare' => '>', //  公開終了日時 > 現在の日時
+        ],
+        // 2. 
+        [
+          'key' => 'end_date',
+          'value' => '', //空つまり設定されていないもの
+        ],
+        // 3. 
+        [
+          'key' => 'end_date',
+          'compare' => 'NOT EXISTS',
+        ],
+        // 上記の条件をOR(もしくは)で繋ぐ
+        'relation' => 'OR'
+      ],
+
+    ];
+    $the_query = new WP_Query($args);
+    ?>
+    <?php if ($the_query->have_posts()): ?>
+      <div class="kv_slider js-slider">
+        <?php while ($the_query->have_posts()): $the_query->the_post(); ?>
+          <?php $pic = get_field('pic'); ?>
+          <div class="kv_sliderItem" style="background-image: url('<?= $pic['url']; ?>');"></div>
+        <?php endwhile;
+        wp_reset_postdata(); ?>
+      </div>
+    <?php endif; ?>
+
+
     <div class="kv_overlay"></div>
 
     <div class="kv_scroll">
@@ -53,8 +99,8 @@
       <header class="section_header">
         <h2 class="heading heading-primary"><span>最新情報</span>NEWS</h2>
         <?php
-          $news = get_term_by('slug', 'news', 'category');
-          $news_link = get_term_link($news, 'category');
+        $news = get_term_by('slug', 'news', 'category');
+        $news_link = get_term_link($news, 'category');
         ?>
         <div class="section_headerBtn"><a href="<?= $news_link; ?>" class="btn btn-more">もっと見る</a></div>
       </header>
@@ -62,7 +108,7 @@
         <div class="cardList cardList-1row">
 
           <?php while (have_posts()): the_post(); ?>
-            
+
             <?php get_template_part('template-parts/loop', 'news'); ?>
 
           <?php endwhile; ?>
