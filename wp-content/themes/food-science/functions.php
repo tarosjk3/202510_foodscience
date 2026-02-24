@@ -23,6 +23,8 @@ function my_setup_theme()
      */
     add_theme_support('editor-styles');
     add_editor_style('assets/css/editor-style.css');
+
+    // add_theme_support('html5', ['comment-list', 'comment-form']);
 }
 
 
@@ -165,4 +167,26 @@ function my_password_form() {
 HTML;
 
     return $html;
+}
+
+
+/**
+ * 表示するブロックをコントロールする
+ */
+add_filter('allowed_block_types_all', 'my_allowed_block_types_all', 10, 2);
+function my_allowed_block_types_all($allowed_blocks, $editor_context) {
+    $allowed_blocks = [
+        'core/heading',
+        'core/paragraph',
+        'core/list',
+        'core/table',
+        'core/html',
+    ];
+
+    // var_dump($editor_context->post);
+    if($editor_context->post->post_type === 'page') {
+        $allowed_blocks[] = 'core/image';
+    }
+
+    return $allowed_blocks;
 }
