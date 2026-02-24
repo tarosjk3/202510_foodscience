@@ -1,9 +1,18 @@
-<?php
-
-// var_dump($attributes);
-
-?>
-<p><?= $attributes['pic'];  ?></p>
-<p><?= $attributes['name'];  ?></p>
-<p><?= $attributes['price'];  ?></p>
-<p><?= $attributes['url'];  ?></p>
+<div class="foodCard foodCard-border">
+    <a href="<?= $attributes['url'];  ?>">
+        <div class="foodCard_pic">
+            <?php
+                $pic = $attributes['pic'];
+                if(!empty($pic)):
+            ?>
+                <img src="<?= $pic['url']; ?>" alt="">
+            <?php else: ?>
+                <img src="<?= get_template_directory_uri(); ?>/assets/img/common/noimage.png" alt="">
+            <?php endif; ?>
+        </div>
+        <div class="foodCard_body">
+            <h4 class="foodCard_title"><?= $attributes['name'];  ?></h4>
+            <p class="foodCard_price"><?= $attributes['price'];  ?></p>
+        </div>
+    </a>
+</div>

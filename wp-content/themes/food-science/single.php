@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<main>
+<main class="is-full">
   <div class="section">
     <div class="section_inner">
 
