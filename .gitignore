@@ -33,6 +33,8 @@
 # Uploads
 /wp/wp-content/uploads/
 
+/wp/wp-content/ai1*
+
 # Log files
 *.log
 
