@@ -119,6 +119,31 @@
   </section>
 <?php endif; ?>
 
+
+<!-- REST APIでデータを取得 -->
+<div id="latest-news">
+
+</div>
+<script>
+const news = document.querySelector('#latest-news');
+async function get_latest_news() {
+  const response = await fetch('http://food-science.tokyo/wp-json/wp/v2/posts?per_page=3');
+  const results = await response.json();
+  console.log(results);
+
+  // results[0].title.rendered
+
+  let html = ''
+  results.forEach((post) => {
+    html += `<div><a href="${post.link}">${post.title.rendered} (${post.date})</a></div>`
+  });
+
+  news.insertAdjacentHTML('beforeend', html);
+}
+get_latest_news();
+</script>
+
+
 <section class="section section-info">
   <div class="section_inner">
     <div class="section_content">
