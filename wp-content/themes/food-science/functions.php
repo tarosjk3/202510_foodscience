@@ -181,6 +181,7 @@ function my_allowed_block_types_all($allowed_blocks, $editor_context) {
         'core/list',
         'core/table',
         'core/html',
+        'lazyblock/food-box',
     ];
 
     // var_dump($editor_context->post);
