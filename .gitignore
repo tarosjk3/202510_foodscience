@@ -42,13 +42,14 @@
 /.htaccess
 /wp/.htaccess
 
-/srdb
+/**/srdb/**
 
 # All plugins
 #
 # Note: If you wish to whitelist plugins,
 # uncomment the next line
 /wp/wp-content/plugins
+/wp/wp-content/siteguard
 
 # All themes
 #
